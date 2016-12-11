@@ -162,6 +162,7 @@ public class MarqueeView extends View {
 
     public MarqueeView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        initParams();
     }
 
     /**
@@ -230,6 +231,11 @@ public class MarqueeView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
 
+        if(!isStart){
+            super.onDraw(canvas);
+            return;
+        }
+
         canvas.drawText(firstText, getWidth() / 2 + offsetWidth, firstTextHeight, paint);
         if (contents.size() > 1) {
             canvas.drawText(secondText, getWidth() / 2 + offsetWidth, secondTextHeight, paint);
@@ -281,11 +287,20 @@ public class MarqueeView extends View {
         return getHeight() / 2 + textHeight / 2 + getHeight();
     }
 
+    boolean isStart;
     /**
      * 开始滚动
      */
     public void start() {
-        initParams();
+        if (contents == null) {
+            throw new IllegalStateException("contents is null");
+        }else if(contents.isEmpty()){
+            throw new IllegalStateException("At least one element");
+        }
+
+        isStart = true;
+
+        invalidate();
 
         if (contents.size() > 1) {
             handler.sendEmptyMessageDelayed(0, 3000);
@@ -303,11 +318,7 @@ public class MarqueeView extends View {
      * 初始化参数
      */
     private void initParams() {
-        if (contents == null) {
-            throw new IllegalStateException("contents is null");
-        }else if(contents.isEmpty()){
-            throw new IllegalStateException("At least one element");
-        }
+
 
         getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override

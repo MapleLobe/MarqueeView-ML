@@ -13,12 +13,19 @@
         android:id="@+id/mv"
         android:background="@android:color/darker_gray"
         android:layout_width="match_parent"
-        android:layout_height="300dp" />
+        android:layout_height="40dp" />
+
+    <com.a95.utf_8.super_marquee_textview.MarqueeView
+        android:layout_marginTop="10dp"
+        android:id="@+id/mv2"
+        android:background="@drawable/bg"
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
 
     <TextView
         android:id="@+id/tv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:textSize="20sp"
         android:text="1111"
         />
